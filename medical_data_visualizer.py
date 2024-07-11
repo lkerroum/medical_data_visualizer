@@ -4,36 +4,46 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 1
-df = None
+df = pd.read_csv("medical_examination.csv")
 
 # 2
-df['overweight'] = None
+
+bmi = df["weight"].div((df["height"].div(100))**2)
+    
+df['overweight'] = bmi > 25
+df['overweight'] = df['overweight'].replace({True: 1, False: 0})
 
 # 3
+df['cholesterol'] = df['cholesterol'] > 1
+df['cholesterol'] = df['cholesterol'].replace({True: 1, False: 0})
 
+df['gluc'] = df['gluc'] > 1
+df['gluc'] = df['gluc'].replace({True: 1, False: 0})
 
 # 4
 def draw_cat_plot():
     # 5
-    df_cat = None
+    df_cat = pd.melt(df, id_vars=['id', 'cardio'], value_vars=['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
 
-
+    print(df_cat)
     # 6
-    df_cat = None
+    grouped = df_cat.groupby(['cardio', 'variable'])
     
+    print(grouped)
 
     # 7
 
+    fig = sns.catplot(grouped, x="variable", y="count", col="cardio", kind="bar")
 
 
     # 8
-    fig = None
 
 
     # 9
     fig.savefig('catplot.png')
     return fig
 
+print(draw_cat_plot())
 
 # 10
 def draw_heat_map():
