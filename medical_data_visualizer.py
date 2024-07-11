@@ -65,4 +65,3 @@ def draw_heat_map():
     fig.savefig('heatmap.png')
     return fig
 
-draw_heat_map()
