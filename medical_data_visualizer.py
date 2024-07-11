@@ -23,17 +23,17 @@ df['gluc'] = df['gluc'].replace({True: 1, False: 0})
 # 4
 def draw_cat_plot():
     # 5
-    df_cat = pd.melt(df, id_vars=['id', 'cardio'], value_vars=['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
+    df_cat = pd.melt(df, id_vars=['cardio'], value_vars=['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
 
     print(df_cat)
     # 6
-    grouped = df_cat.groupby(['cardio', 'variable'])
+    grouped = df_cat.groupby(['cardio', 'variable', 'value']).size().reset_index(name="count")
     
     print(grouped)
 
     # 7
 
-    fig = sns.catplot(grouped, x="variable", y="count", col="cardio", kind="bar")
+    fig = sns.catplot(grouped, x="variable", y="count", col="cardio", hue = "value", kind="bar")
 
 
     # 8
